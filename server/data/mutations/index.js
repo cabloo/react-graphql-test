@@ -1,11 +1,11 @@
 /* @flow */
 
 import { GraphQLObjectType } from 'graphql';
-import todo from './todo';
+import article from './article';
 
 export default new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    ...todo,
+    ...article,
   },
 });
