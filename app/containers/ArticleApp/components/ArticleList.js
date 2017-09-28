@@ -150,7 +150,6 @@ class ArticleList extends React.Component {
       articles,
     } = this.props;
 
-    console.log(articles.edges[0].node);
     articles = articles.edges.slice().map((result) => result.node);
 
     const {
@@ -196,6 +195,9 @@ export default Relay.createContainer(ArticleList, {
       fragment on ArticleConnection {
         edges {
           node {
+            id
+            author
+            title
             ${ArticleItem.getFragment('article')}
           }
         }

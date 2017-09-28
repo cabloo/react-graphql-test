@@ -42,7 +42,7 @@ const addArticleMutation = mutationWithClientMutationId({
           numArticles = count;
 
           return DB.instance.collection('articles').findOne({
-            id: localArticleId,
+            _id: localArticleId,
           });
         }).then(function (result) {
           // Note on offsetToCursor
