@@ -3,7 +3,7 @@
 
 import Relay from 'react-relay';
 
-export default class AddTodoMutation extends Relay.Mutation {
+export default class AddArticleMutation extends Relay.Mutation {
   static fragments = {
     user: () => Relay.QL`
       fragment on User {
@@ -13,29 +13,31 @@ export default class AddTodoMutation extends Relay.Mutation {
   };
 
   getMutation() {
-    return Relay.QL`mutation{ addTodo }`;
+    return Relay.QL`mutation{ addArticle }`;
   }
 
   getVariables() {
     return {
-      content: this.props.content,
+      title: this.props.title,
+      author: this.props.author,
     };
   }
 
   getFatQuery() {
     return Relay.QL`
-      fragment on AddTodoPayload @relay(plural: true) {
+      fragment on AddArticlePayload @relay(plural: true) {
         user {
-          todos(last: 1000) {
+          articles(last: 1000) {
             edges {
               node {
                 id
-                content
+                author
+                title
               }
             }
           }
         }
-        newTodoEdge
+        newArticleEdge
       }
     `;
   }
@@ -45,8 +47,8 @@ export default class AddTodoMutation extends Relay.Mutation {
       type: 'RANGE_ADD',
       parentName: 'user',
       parentID: this.props.user.id,
-      connectionName: 'todos',
-      edgeName: 'newTodoEdge',
+      connectionName: 'articles',
+      edgeName: 'newArticleEdge',
       rangeBehaviors: {
         '': 'append',
         'orederby(oldes)': 'prepend',
@@ -56,9 +58,10 @@ export default class AddTodoMutation extends Relay.Mutation {
 
   getOptimisticResponse() {
     return {
-      newTodoEdge: {
+      newArticleEdge: {
         node: {
-          content: this.props.content,
+          title: this.props.title,
+          author: this.props.author,
         },
       },
     };

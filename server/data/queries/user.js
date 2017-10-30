@@ -1,11 +1,14 @@
 /* @flow */
 
 import { UserType } from '../types/userType';
-import { getViewer } from '../database';
 
 const user = {
   type: UserType,
-  resolve: async () => getViewer(),
+  resolve: async () => {
+    return {
+      id: 1,
+    };
+  },
 };
 
 export default {

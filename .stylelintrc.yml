@@ -1,6 +1,5 @@
 extends:
   - stylelint-config-standard
-ignoreFiles: ./app/styles/normalize.css
 plugins:
   - stylelint-order
 rules:

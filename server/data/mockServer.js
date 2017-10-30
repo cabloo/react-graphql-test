@@ -9,16 +9,13 @@ casual.seed(123);
 const schema = makeExecutableSchema({ typeDefs: schemaString });
 
 const mocks = {
-  User: () => ({
-    // a list of length between 2 and 6
-    id: () => casual.integer(0, 1000).toString(),
-  }),
-  TodoConnection: () => ({
+  ArticleConnection: () => ({
     edges: () => new MockList(10),
   }),
-  Todo: () => ({
+  Article: () => ({
     id: () => casual.integer(0, 1000).toString(),
-    content: () => casual.string,
+    title: () => casual.string,
+    author: () => casual.string,
   }),
 };
 
@@ -26,19 +23,17 @@ const mocks = {
 addMockFunctionsToSchema({ schema, mocks });
 
 const query = `
-query TodoList {
-  user {
-    id
-    todos(first: 10) {
-      edges {
-        node {
-          id
-          content
-        }
+query ArticleList {
+  articles(first: 10) {
+    edges {
+      node {
+        id
+        title
+        author
       }
     }
   }
 }
 `;
 
-graphql(schema, query).then(result => { console.log('Got result', result, result.data.user.todos.edges)}); // eslint-disable-line
+graphql(schema, query).then(result => { console.log('Got result', result, result.data.articles.edges)}); // eslint-disable-line
